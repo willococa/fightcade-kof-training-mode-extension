@@ -3,8 +3,8 @@ assert(rb,"Run fbneo-training-mode.lua")
 
 guicustompage = {
 	title = {
-		text = "The king of fighters 98 - Training Mode Settings",
-		x = interactivegui.boxxlength/2 - (#"The king of fighters 98 - Training Mode Settings")*2,
+		text = "The king of fighters - Training Mode Settings",
+		x = interactivegui.boxxlength/2 - (#"The king of fighters - Training Mode Settings")*2,
 		y = 1,
 	},
 	guielements.leftarrow,
