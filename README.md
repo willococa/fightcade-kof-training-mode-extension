@@ -122,5 +122,5 @@ Also expecifically to the <a href="https://github.com/peon2/fbneo-training-mode"
 
 ## 📝 License <a name="license"></a>
 
-This project is [libspng](./LICENSE) licensed. I think this is the license this script should inherit, but i honestly don't know how this expecific license work, just please note that this work is not based in my original code and is just an extension on the work of others, feel free to extend it too and share it with the community, don't sell it.
+This project is [BSD 2-Clause License](./LICENSE) licensed. I think this is the license this script should inherit, but i honestly don't know how this expecific license work, just please note that this work is not based in my original code and is just an extension on the work of others, feel free to extend it too and share it with the community, don't sell it.
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
