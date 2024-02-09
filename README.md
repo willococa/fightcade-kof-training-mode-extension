@@ -22,9 +22,9 @@ most KOF  have the same memory addresses  and functions on the original script <
 - Copy the folder containing the extension files (including `install.bat`) into the `fbneo` directory.
 it should be inside another folder not the files directly put in the `fbneo` directory.
 
-<img src="install.PNG"/>
+<img src="install.png"/>
 <br/>
-<img src="install2.PNG"/>
+<img src="install2.png"/>
 <br/>
 
 ### 5. Run Installation Script
