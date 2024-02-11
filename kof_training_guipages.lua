@@ -67,6 +67,16 @@ KOF_CONFIG = {
 			times = 3,
 			delay = 25
 		},
+		["CROUCH"] = {
+			["sequence"] = {
+			{"down"},
+			}
+		},
+		["CROUCH_GUARD"] = {
+			["sequence"] = {
+			{"down", "back"}
+			}
+		}
 	},
 	MOVES_VAR_NAMES = {}
 }
