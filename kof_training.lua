@@ -148,6 +148,7 @@ end
 local current_move_index_counter = 1
 local current_move_time_counter = 1
 local function doMove(move_name, times, conf)
+	--print("move is being executed")
 	if (conf == nil) then conf = false end
 	local seq = nil
 	if (conf == false) then
@@ -165,8 +166,13 @@ local function doMove(move_name, times, conf)
 	end
 
 	if current_move_index_counter > #seq  then
-		current_move_index_counter = 1		
-		current_move_time_counter = current_move_time_counter +1
+		current_move_index_counter = 1	
+		if 	current_move_time_counter == times then
+			current_move_time_counter = 1
+			return true
+		else
+			current_move_time_counter = current_move_time_counter + 1
+		end
 	end
 	for index, value in ipairs(seq[current_move_index_counter]) do
 		if value == 'forward' then
@@ -432,82 +438,13 @@ local function conditionsFor(_state)
 	end
 end
 
-local function deactivateAllDefaultMoves()
-	for index, value in pairs(KOF_CONFIG.MOVES_VAR_NAMES) do
-		KOF_CONFIG.MOVES_VAR_NAMES[index] = KOF_CONFIG.REVERSAL_MOVES.OPTIONS.OFF
-			
-	end
-
-	KOF_CONFIG.WAKEUP.reversal_moves  = getCurrentWakeupReversalMoves()
-	KOF_CONFIG.GUARD.reversal_moves  = getCurrentGuardReversalMoves()
-end
--- Function to set default configuration based on configName
-local function setDefaultConfig(configName)
-    if configName == "safe_jump_training" then
-		KOF_CONFIG.WAKEUP.dummy_waking_up = true
-        KOF_CONFIG.WAKEUP.reversal = KOF_CONFIG.WAKEUP.REVERSAL_OPTIONS.RANDOM
-		KOF_CONFIG.RECOVERY.dummy_recovering = true
-        KOF_CONFIG.RECOVERY.recovery = KOF_CONFIG.RECOVERY.OPTIONS.ON
-		KOF_CONFIG.RECOVERY.delay = 25
-		KOF_CONFIG.RECOVERY.times = 3
-		local move_name = "DPC"
-		local current_reversal_move = KOF_CONFIG.REVERSAL_MOVES.MOVELIST:getReversal(move_name)
-		current_reversal_move.on_wake_up_delay = 0
-		current_reversal_move.on_wake_up_times = 1
-		KOF_CONFIG.MOVES_VAR_NAMES[move_name] = KOF_CONFIG.REVERSAL_MOVES.OPTIONS.WAKEUP
-		local move_name = "C_GUARD"
-		local current_reversal_move = KOF_CONFIG.REVERSAL_MOVES.MOVELIST:getReversal(move_name)
-		current_reversal_move.on_wake_up_delay = 0
-		current_reversal_move.on_wake_up_times = 8
-		KOF_CONFIG.MOVES_VAR_NAMES[move_name] = KOF_CONFIG.REVERSAL_MOVES.OPTIONS.WAKEUP
-		KOF_CONFIG.MOVES_VAR_NAMES["DOWN_C"] = KOF_CONFIG.REVERSAL_MOVES.OPTIONS.GUARD
-		KOF_CONFIG.WAKEUP.reversal_moves  = getCurrentWakeupReversalMoves()
-        -- Set other options as needed for "safe_jump_training" configuration
-    elseif configName == "basic_cd_pressure" then
-		--activate standing guard
-		KOF_CONFIG.GUARD.standing_guard = 1
-		KOF_CONFIG.GUARD.dummy_guarding = true
-		-- activate guard random
-		KOF_CONFIG.GUARD.random_guard = 1
-		--activate wake up random
-		KOF_CONFIG.WAKEUP.dummy_waking_up = true
-        KOF_CONFIG.WAKEUP.reversal = KOF_CONFIG.WAKEUP.REVERSAL_OPTIONS.RANDOM
-		-- activate recovery
-		KOF_CONFIG.RECOVERY.dummy_recovering = true
-        KOF_CONFIG.RECOVERY.recovery = KOF_CONFIG.RECOVERY.OPTIONS.ON
-		--set recovery time for CD knockdown
-		KOF_CONFIG.RECOVERY.delay = 25
-		KOF_CONFIG.RECOVERY.times = 3
-		-- deactivate all default moves
-		deactivateAllDefaultMoves()
-		-- activate cr guard on wakeup 
-		local move_name = "C_GUARD"
-		local current_reversal_move = KOF_CONFIG.REVERSAL_MOVES.MOVELIST:getReversal(move_name)
-		current_reversal_move.on_wake_up_delay = 0
-		current_reversal_move.on_wake_up_times = 30
-		KOF_CONFIG.MOVES_VAR_NAMES[move_name] = KOF_CONFIG.REVERSAL_MOVES.OPTIONS.WAKEUP
-		-- activate cr C on wakeup 
-		local move_name = "DOWN_C"
-		local current_reversal_move = KOF_CONFIG.REVERSAL_MOVES.MOVELIST:getReversal(move_name)
-		current_reversal_move.on_wake_up_delay = 0
-		current_reversal_move.on_wake_up_times = 5
-		KOF_CONFIG.MOVES_VAR_NAMES[move_name] = KOF_CONFIG.REVERSAL_MOVES.OPTIONS.WAKEUP
-		-- reload reversal moves
-		KOF_CONFIG.WAKEUP.reversal_moves  = getCurrentWakeupReversalMoves()
-        
-    elseif configName == "custom_config" then
-        -- Define custom configuration options here
-    else
-        print("Unknown configuration:", configName)
-    end
-end
 
 local dont_recover = false
 local recovery_enabled = false
 local set_config = true
 function Run() -- runs every frame
-	--[[ if set_config then
-		setDefaultConfig("basic_cd_pressure")
+--[[ 	if set_config then
+		setDefaultConfig(KOF_CONFIG.TRAINING.CONFIGURATIONS["cd_pressure_1"])
 		set_config=false
 	end ]]
 	moveEnabled() --this function has to run every frame to make sure the moves are able to run

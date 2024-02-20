@@ -78,7 +78,26 @@ KOF_CONFIG = {
 			}
 		}
 	},
-	MOVES_VAR_NAMES = {}
+	MOVES_VAR_NAMES = {},
+	TRAINING ={
+		current_configuration = -1,
+		CONFIGURATIONS =  {
+			["None"] = -1,
+			["cd_pressure_1"] = 0,
+			["cd_pressure_2"] = 1,
+			["cd_pressure_3"] = 2,
+			["cd_pressure_4"] = 3,
+			["crouching_frametrap"] = 4,
+			["standing_frametrap"] = 5,
+			["high_confirm_against_CDA"] = 6,
+			["wakeup_whiff_cr_c"] = 7,
+			["wakeup_dpc"] = 8,
+			["shimmy_wakeup"] = 9,
+			["wakeup_delay_OS_basic"] = 10,
+			["wakeup_delay_OS_full"] = 11,
+			
+		}
+	}
 }
 
 
@@ -426,6 +445,30 @@ guicustompage = {
                     end
                 end   
                 this.text =  "("..txt..")"
+			end,
+	},{
+		text = "Configurations: ",
+		x = 8,
+		y = 135 + 10,
+	},
+	{
+		text = "Current Conf: ",
+		x = 8,
+		y = 145 + 10,
+		olcolour = "black",
+		handle = 2,
+		info = {
+            "active moves for reversal on guard"
+		},
+		func = 	function()
+			KOF_CONFIG.TRAINING.current_configuration = KOF_CONFIG.TRAINING.current_configuration + 1
+				if KOF_CONFIG.TRAINING.current_configuration > 11 then
+					KOF_CONFIG.TRAINING.current_configuration = -1
+				end
+				setDefaultConfig(KOF_CONFIG.TRAINING.current_configuration)
+		end,
+		autofunc = function(this) 
+                this.text =  "Current Conf: "..getIndexFromConfigValue(KOF_CONFIG.TRAINING.current_configuration)
 			end,
 	},
 }
