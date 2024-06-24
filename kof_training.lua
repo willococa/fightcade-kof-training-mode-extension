@@ -367,6 +367,7 @@ local function isWakeUpTime()
 	return rb(0x108321) == 0  
 end
 
+
 -- Function to set default configuration based on configName
 function setDefaultConfig(configName)
     if configName == "safe_jump_training" then
