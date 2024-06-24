@@ -367,8 +367,6 @@ local function isWakeUpTime()
 	return rb(0x108321) == 0  
 end
 
-require('games.kof98.tests_kof98')
-testsRun = true
 -- Function to set default configuration based on configName
 function setDefaultConfig(configName)
     if configName == "safe_jump_training" then
